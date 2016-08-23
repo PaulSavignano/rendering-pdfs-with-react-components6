@@ -1,32 +1,46 @@
-import React from 'react';
-import { FormGroup, FormControl } from 'react-bootstrap';
-import { Bert } from 'meteor/themeteorchef:bert';
-import { insertDocument } from '../../api/documents/methods.js';
+import React from 'react'
+import { FormGroup, FormControl, Button } from 'react-bootstrap'
+import { insertDocument } from '../../api/documents/methods'
+import { Bert } from 'meteor/themeteorchef:bert'
 
 const handleInsertDocument = (event) => {
-  const target = event.target;
-  const title = target.value.trim();
-
-  if (title !== '' && event.keyCode === 13) {
+  event.preventDefault()
+  const title = document.querySelector('[name="title"]')
+  const body = document.querySelector('[name="body"]')
+  if (title.value.trim() !== '' && body.value.trim() !== '') {
     insertDocument.call({
-      title,
+      title: title.value,
+      body: body.value,
     }, (error) => {
       if (error) {
-        Bert.alert(error.reason, 'danger');
+        Bert.alert(error.reason, 'danger')
       } else {
-        target.value = '';
-        Bert.alert('Document added!', 'success');
+        title.value = ''
+        body.value = ''
+        Bert.alert('Document added', 'success')
       }
-    });
+    })
+  } else {
+    Bert.alert('Both a title and body are required.', 'danger')
   }
-};
+}
 
 export const AddDocument = () => (
-  <FormGroup>
-    <FormControl
-      type="text"
-      onKeyUp={ handleInsertDocument }
-      placeholder="Type a document title and press enter..."
-    />
-  </FormGroup>
-);
+  <form onSubmit={ handleInsertDocument } className="AddDocument">
+    <FormGroup>
+      <FormControl
+        name="title"
+        type="text"
+        placeholder="Enter a title."
+      />
+    </FormGroup>
+    <FormGroup>
+      <FormControl
+        name="body"
+        componentClass="textarea"
+        placeholder="Enter a body for the pdf."
+      />
+    </FormGroup>
+    <Button type="submit" bsStyle="success">Add Document</Button>
+  </form>
+)
