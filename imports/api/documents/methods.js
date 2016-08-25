@@ -8,6 +8,7 @@ export const insertDocument = new ValidatedMethod({
   validate: new SimpleSchema({
     title: { type: String },
     body: { type: String },
+    image: { type: String },
   }).validator(),
   run(document) {
     Documents.insert(document);

@@ -24,8 +24,12 @@ Documents.schema = new SimpleSchema({
   },
   body: {
     type: String,
-    label: 'The body of the document.'
-  }
+    label: 'The body of the document.',
+  },
+  image: {
+    type: String,
+    label: 'The image of the document.',
+  },
 });
 
 Documents.attachSchema(Documents.schema);
