@@ -11,6 +11,7 @@ export class AddDocument extends Component {
   handleImageChange(event) {
     event.preventDefault()
     const fileReader = new FileReader()
+    console.log(fileReader)
     const file = event.target.files[0]
     fileReader.onloadend = () => {
       this.setState({
@@ -18,7 +19,8 @@ export class AddDocument extends Component {
         imagePreviewUrl: fileReader.result,
       })
     }
-    fileReader.readAsDataURL(file)
+    const readResult = fileReader.readAsDataURL(file)
+    return readResult
   }
   handleInsertDocument(event) {
     event.preventDefault()

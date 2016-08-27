@@ -2,10 +2,11 @@ import ReactDOMServer from 'react-dom/server'
 import pdf from 'html-pdf'
 import fs from 'fs'
 
+let module
+
 const getBase64String = (path) => {
   try {
     const file = fs.readFileSync(path)
-    console.log(file)
     return new Buffer(file).toString('base64')
   } catch (exception) {
     module.reject(exception)
@@ -25,6 +26,8 @@ const generatePDF = (html, fileName) => {
         fs.unlink(response.filename)
       }
     })
+  } catch (exception) {
+    module.reject(exception)
   }
 }
 

@@ -21,7 +21,7 @@ export const downloadDocument = new ValidatedMethod({
     .catch((error) => {
       throw new Meteor.Error('500', error)
     })
-  }
+  },
 })
 
 rateLimit({
